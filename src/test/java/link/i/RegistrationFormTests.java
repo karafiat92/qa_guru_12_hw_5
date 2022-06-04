@@ -1,6 +1,5 @@
 package link.i;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.github.javafaker.Faker;
 import link.i.pages.RegistrationFormPage;
@@ -9,10 +8,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class RegistrationFormTests {
-
     RegistrationFormPage regForm = new RegistrationFormPage();
     Faker faker = new Faker();
-
     String firstname = faker.name().firstName(),
             lastname = faker.name().lastName(),
             userEmail = faker.internet().emailAddress(),
@@ -24,7 +21,10 @@ public class RegistrationFormTests {
                     .replace(')', '4')
                     .replace(' ', '5'),
             currentAddress = faker.address().fullAddress(),
-            gender = regForm.getRandomGender();
+            gender = regForm.getRandomGender(),
+            hobby = regForm.getRandomHobby(),
+            month = regForm.getRandomMonth(),
+            state = regForm.getRandomState();
     Integer day = faker.number().numberBetween(1, 30),
             year = faker.number().numberBetween(1900, 2022);
 
@@ -40,10 +40,7 @@ public class RegistrationFormTests {
     void positiveValuesRegistrationForm() {
         regForm.openPage();
 //        инициализация переменных, для последующей работы с тестом
-        String subject = regForm.getRandomSubject(),
-                hobby = regForm.getRandomHobby(),
-                month = regForm.getRandomMonth(),
-                state = regForm.getRandomState();
+        String subject = regForm.getRandomSubject("o");
         regForm.setFirstname(firstname)
                 .setLastname(lastname)
                 .setEmail(userEmail)
@@ -70,8 +67,5 @@ public class RegistrationFormTests {
                 .checkValueInTable("Address", currentAddress)
                 .checkValueInTable("State and City", (state + " " + cityValue))
                 .closeForm();
-
     }
-
-
 }

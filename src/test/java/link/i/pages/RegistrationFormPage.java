@@ -32,7 +32,6 @@ public class RegistrationFormPage {
     String citySelection = "react-select-4-option-",
             subjectOption = "#react-select-2-option-",
             hobbyOption = "hobbies-checkbox-";
-
     // actions
     public RegistrationFormPage openPage() {
         open("/automation-practice-form");
@@ -124,8 +123,8 @@ public class RegistrationFormPage {
         return this;
     }
 
-    public String getRandomSubject() {
-        subjectInput.setValue("o");
+    public String getRandomSubject(String value) {
+        subjectInput.setValue(value);
         int min = 0;
         int max = 6;
         Integer subjectNumber = (min + (int) (Math.random() * (max - min)));
@@ -156,7 +155,7 @@ public class RegistrationFormPage {
 
     public RegistrationFormPage setHobby(String value) {
         hobby.$$("label").find(text(value)).click();
-        if (value.equals("Sport") ) {
+        if (value.equals("Sport")) {
             $("input[id=" + hobbyOption + "1").shouldBe(checked);
         } else if (value.equals("Reading")) {
             $("input[id=" + hobbyOption + "2").shouldBe(checked);
@@ -254,5 +253,4 @@ public class RegistrationFormPage {
         $(".modal-header").shouldHave(text("Thanks for submitting the form"));
         return this;
     }
-
 }
